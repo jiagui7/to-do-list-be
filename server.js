@@ -3,7 +3,7 @@ var app = express();
 var cors = require("cors");
 var db = require("./database");
 
-var HTTP_PORT = 8000;
+var HTTP_PORT = 8080;
 
 app.use(cors());
 
@@ -12,7 +12,7 @@ app.get("/task", (req, res, next) => {
     if (err) {
       res.status(400).json({ error: err.message });
     }
-    res.status(200).json({ data: rows });
+    res.status(200).json(rows);
   });
 });
 
