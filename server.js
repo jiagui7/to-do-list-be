@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/task", (req, res, next) => {
+app.get("/tasks", (req, res, next) => {
   db.all("SELECT * FROM task", [], (err, rows) => {
     if (err) {
       res.status(400).json({ error: err.message });
@@ -20,8 +20,8 @@ app.get("/task", (req, res, next) => {
   });
 });
 
-app.post("/task", (req, res, next) => {
-  let description = req.body.data.description;
+app.post("/tasks", (req, res, next) => {
+  let description = req.body.description;
   if (description.length <= 0) {
     res.status(400).json({ error: EMPTY_DESCRIPTION_ERROR });
   }
@@ -37,12 +37,12 @@ app.post("/task", (req, res, next) => {
   );
 });
 
-app.patch("/task/:id", (req, res, next) => {
+app.patch("/tasks/:id", (req, res, next) => {
   let id = req.params.id;
   let body = req.body;
   db.run(
     `UPDATE task SET completed = ? WHERE id = ?`,
-    [body.data.completed, id],
+    [body.completed, id],
     (err) => {
       if (err) {
         res.status(400).json({ error: err.message });
